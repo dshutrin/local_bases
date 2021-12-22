@@ -107,5 +107,5 @@ class Client:
 				print('Exiting...')
 				exit()
 
-Client('127.0.0.1', 7000).connect()
+Client(input('Enter ip to connect: '), 80).connect()
 input()

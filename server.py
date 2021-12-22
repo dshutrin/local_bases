@@ -28,10 +28,10 @@ class User:
 		key = key.encode()
 		self.key = base64.urlsafe_b64encode(key)
 
-		if not(ip in listdir(getcwd())):
-			mkdir(ip)
-
-		self.bases = [x.replace('.db', '') for x in listdir(f'{getcwd()}\\{ip}')]
+		if (ip in listdir(getcwd())):
+			self.bases = [x.replace('.db', '') for x in listdir(f'{getcwd()}\\{ip}')]
+		else:
+			self.bases = []
 
 
 class Server:
@@ -160,7 +160,9 @@ class Server:
 
 
 						elif msg == 'get my bases':
-							ans = '\n'.join([x.replace('.db', '') for x in listdir(f'{getcwd()}\\{addr[0]}')])
+							ans = ''
+							if (addr[0] in listdir(getcwd())):
+								ans = '\n'.join([x.replace('.db', '') for x in listdir(f'{getcwd()}\\{addr[0]}')])
 							ans = ans.strip()
 
 							if ans.replace('\n', ''):
@@ -170,6 +172,8 @@ class Server:
 
 
 						elif msg.startswith('create base '):
+							if not(addr[0] in listdir(getcwd())):
+								mkdir(addr[0])
 							base_name = f"{msg.replace('create base ', '', 1).strip()}.db"
 							path = str(f'{getcwd()}\\{addr[0]}\\{base_name}')
 
@@ -247,6 +251,6 @@ class Server:
 
 
 if __name__ == '__main__':
-	serv = Server('192.168.180.1', 7000)
+	serv = Server(input('Enter server ip: '), 80)
 	serv.load()
 	serv.start_server()
