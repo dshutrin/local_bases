@@ -251,6 +251,6 @@ class Server:
 
 
 if __name__ == '__main__':
-	serv = Server(input('Enter server ip: '), 80)
+	serv = Server(input('Enter server ip: '), 7000)
 	serv.load()
 	serv.start_server()
